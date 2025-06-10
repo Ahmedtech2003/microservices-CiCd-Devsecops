@@ -28,13 +28,13 @@ jobs:
       run: |
         kubectl apply -f deploy/kubernetes/manifests/
 
-- name: Notify Slack
-  uses: rtCamp/action-slack-notify@v2
-  with:
-    msg: "Deployment to Kubernetes completed successfully!"
-  env:
-    SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    - name: Notify Slack
+      uses: rtCamp/action-slack-notify@v2
+      with:
+        msg: "Deployment to Kubernetes completed successfully!"
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-environment:
-  name: production
-  url: https://your-deployed-app.com
+    environment:
+      name: production
+      url: https://your-deployed-app.com
