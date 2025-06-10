@@ -27,7 +27,7 @@ jobs:
           echo "${{ secrets.KUBECONFIG_DATA }}" > kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
 
-      - name: Apply K8s Manifests
+      - name: Apply Kubernetes Manifests
         run: |
           kubectl apply -f deploy/kubernetes/manifests/
 
