@@ -35,6 +35,6 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-    environment:
-      name: production
-      url: https://your-deployed-app.com
+      environment:
+        name: production
+        url: https://your-deployed-app.com
