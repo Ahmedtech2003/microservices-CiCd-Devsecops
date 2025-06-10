@@ -27,14 +27,14 @@ jobs:
       run: |
         docker-compose -f deploy/docker-compose/docker-compose.yml build
 
-- name: Install Trivy
-  run: |
-    sudo apt-get install wget apt-transport-https gnupg lsb-release -y
-    wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-    echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-    sudo apt-get update
-    sudo apt-get install trivy -y
+    - name: Install Trivy
+      run: |
+        sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update
+        sudo apt-get install trivy -y
 
-- name: Scan Built Docker Image with Trivy
-  run: |
-    trivy image microservices-demo/front-end:latest || true
+    - name: Scan Built Docker Image with Trivy
+      run: |
+        trivy image microservices-demo/front-end:latest || true
