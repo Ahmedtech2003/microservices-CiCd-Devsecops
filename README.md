@@ -30,3 +30,4 @@ Use [Weave Scope](http://weave.works/products/weave-scope/) or [Weave Cloud](htt
 
 ## 
 CI/CD DevSecOps setup updated
+Trigger CD test
