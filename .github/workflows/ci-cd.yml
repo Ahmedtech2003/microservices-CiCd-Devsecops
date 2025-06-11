@@ -18,23 +18,26 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # 2. Setup Node.js (adjust if using Python/Go/etc.)
+    # 2. Setup Node.js
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
 
-    # 3. Install project dependencies (adjust per service)
+    # 3. Install Dependencies from openapi folder
     - name: Install Dependencies
+      working-directory: openapi
       run: npm install
 
-    # 4. Run linter (replace with actual command)
+    # 4. Run linter (from openapi folder)
     - name: Lint Code
-      run: echo "npm run lint"  # replace with real command
+      working-directory: openapi
+      run: echo "npm run lint"  # replace if you have actual linter
 
-    # 5. Run unit tests (replace with actual command)
+    # 5. Run unit tests (from openapi folder)
     - name: Run Tests
-      run: echo "npm test"  # replace with real command
+      working-directory: openapi
+      run: echo "npm test"  # replace if you have actual tests
 
     # 6. Build Docker image locally
     - name: Build Docker Image
@@ -74,8 +77,8 @@ jobs:
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
 
-    # 12. Deploy to EKS (optional, from your K8s manifests)
+    # 12. Deploy to EKS
     - name: Deploy to EKS
       run: |
         aws eks --region us-east-1 update-kubeconfig --name devsecops-cluster
-        kubectl apply -f deploy/k8s/
+        kubectl apply -f deploy/kubernetes/
