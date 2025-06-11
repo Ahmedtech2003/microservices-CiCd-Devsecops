@@ -47,7 +47,8 @@ jobs:
     - name: Scan Docker Image with Trivy
       run: |
         curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -
-        ./trivy image $IMAGE_NAME:${{ github.sha }}
+        ./bin/trivy image $IMAGE_NAME:${{ github.sha }}
+
 
     # 8. Gitleaks - Secrets detection
     - name: Scan Code for Secrets with Gitleaks
