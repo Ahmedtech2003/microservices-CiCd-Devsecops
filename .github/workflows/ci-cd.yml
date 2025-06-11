@@ -1,0 +1,81 @@
+name: CI/CD + DevSecOps Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci-cd-pipeline:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: microservice-localbuild
+
+    steps:
+    # 1. Checkout code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 2. Setup Node.js (adjust if using Python/Go/etc.)
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    # 3. Install project dependencies (adjust per service)
+    - name: Install Dependencies
+      run: npm install
+
+    # 4. Run linter (replace with actual command)
+    - name: Lint Code
+      run: echo "npm run lint"  # replace with real command
+
+    # 5. Run unit tests (replace with actual command)
+    - name: Run Tests
+      run: echo "npm test"  # replace with real command
+
+    # 6. Build Docker image locally
+    - name: Build Docker Image
+      run: docker build -t $IMAGE_NAME:${{ github.sha }} .
+
+    # 7. Trivy - Container vulnerability scanning
+    - name: Scan Docker Image with Trivy
+      run: |
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -
+        ./trivy image $IMAGE_NAME:${{ github.sha }}
+
+    # 8. Gitleaks - Secrets detection
+    - name: Scan Code for Secrets with Gitleaks
+      run: |
+        curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
+        chmod +x gitleaks
+        ./gitleaks detect --source=. --no-banner --exit-code 0
+
+    # 9. CodeQL - Static code analysis
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: javascript  # change to 'python', 'go', etc. if needed
+
+    - name: Analyze Code with CodeQL
+      uses: github/codeql-action/analyze@v2
+
+    # 10. AWS credentials (optional, for EKS deploy)
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    # 11. Setup kubectl
+    - name: Setup kubectl
+      uses: azure/setup-kubectl@v3
+
+    # 12. Deploy to EKS (optional, from your K8s manifests)
+    - name: Deploy to EKS
+      run: |
+        aws eks --region us-east-1 update-kubeconfig --name devsecops-cluster
+        kubectl apply -f deploy/k8s/
