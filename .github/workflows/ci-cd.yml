@@ -41,7 +41,7 @@ jobs:
 
     # 6. Build Docker image locally
     - name: Build Docker Image
-      run: docker build -t $IMAGE_NAME:${{ github.sha }} .
+      run: docker build -t $IMAGE_NAME:${{ github.sha }} openapi
 
     # 7. Trivy - Container vulnerability scanning
     - name: Scan Docker Image with Trivy
