@@ -125,27 +125,21 @@ This project is licensed under the MIT License.
 
 ## 📷 Application Screenshots
 
-### Sock Shop frontend
+### 1. CI/CD GitHub Actions Pipeline Success Log
+![CI/CD Pipeline](screenshots/ci-cd-pipeline-complete.png)
 
+### 2. Grafana Welcome Dashboard
+![Grafana Dashboard](screenshots/grafana-dashboard.png)
+
+### 3. Trivy Vulnerability Scan Output
+![Trivy Scan](screenshots/trivy-scan.png)
+
+### 4. Sock Shop Frontend
 ![Sock Shop frontend](https://github.com/microservices-demo/microservices-demo.github.io/raw/master/assets/sockshop-frontend.png)
 
-### Sock Shop in Weave Scope
-
+### 5. Sock Shop in Weave Scope
 ![Sock Shop in Weave Scope](https://github.com/microservices-demo/microservices-demo.github.io/raw/master/assets/sockshop-scope.png)
 
 ---
 
-## 📊 Visualizing the Application
 
-Use [Weave Scope](http://weave.works/products/weave-scope/) or [Weave Cloud](http://cloud.weave.works/) to visualize the running microservices inside Kubernetes.
-
----
-
-## 💲 Original Source & Design Reference
-
-Forked from the original [microservices-demo](https://github.com/microservices-demo/microservices-demo) repository. See [application design](https://github.com/microservices-demo/microservices-demo/blob/master/internal-docs/design.md).
-
----
-
-> **CI/CD DevSecOps setup updated**
-> Trigger CD test
